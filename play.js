@@ -1,5 +1,23 @@
 var W3CWebSocket = require('websocket').w3cwebsocket;
+const telegramBotToken = "6846260168:AAGuSGtoqRfuYhhtvZ11xoacx2nyKI2ixN0";
+const telegramChatId = "1196575861";
+async function sendTelegramMessage(message) {
+  try {
+      const response = await fetch("https://api.telegram.org/bot" + telegramBotToken + "/sendMessage", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+              chat_id: telegramChatId,
+              text: message
+          })
+      });
 
+      const data = await response.json();
+      } catch (error) {
+  }
+}
 const play = async () => {
     var url = 'wss://api-clicker.pixelverse.xyz/socket.io/?EIO=4&transport=websocket';
 
@@ -29,10 +47,10 @@ const play = async () => {
     client.onmessage = function (e) {
         if (typeof e.data === 'string') {
             let data = e.data.substring(2);
-            console.log("Received: '" + e.data + "'");
+            //console.log("Received: '" + e.data + "'");
             if (e.data[0] === '0') {
                 console.log('Connected');
-                client.send('40{"tg-id":1196575861,"secret":"40eaabfaef2b3d6187452521fa73de042b0df5aa3993076ad0d530ff58de6d42","initData":"query_id=AAF1TFJHAAAAAHVMUkf-Ver9&user=%7B%22id%22%3A1196575861%2C%22first_name%22%3A%22PKD%22%2C%22last_name%22%3A%22%22%2C%22username%22%3A%22pranavkdileep%22%2C%22language_code%22%3A%22en%22%2C%22allows_write_to_pm%22%3Atrue%7D&auth_date=1719231980&hash=97d45169904b7a3d4c861e800c4ab7d086b7998f302a8b2a827b74390c4b48a5"}');
+                client.send('40{"tg-id":5717002716,"secret":"066e3cb6c9e8bc7e404701ce954a9427e07e785486c0bad0a121215d35c711b9","initData":"query_id=AAHcicJUAgAAANyJwlSfO9St&user=%7B%22id%22%3A5717002716%2C%22first_name%22%3A%22Dileep%22%2C%22last_name%22%3A%22Kumar%22%2C%22username%22%3A%22dileep286%22%2C%22language_code%22%3A%22en%22%2C%22allows_write_to_pm%22%3Atrue%7D&auth_date=1719237441&hash=df3f4110902192e7a8f55df1c551549764f925b0fec868bd9718e4b20f521441"}');
             }
             else if (e.data.includes('START')) {
                 console.log('Game Started');
@@ -54,20 +72,20 @@ const play = async () => {
             }
             else if (e.data.includes('reward')) {
                 let result = JSON.parse(data);
+                sendTelegramMessage(`You have ${result[1].result} ${result[1].reward} coins`);
                 console.log(result);
             }
         }
     }
 }
 
-// const main = async () => {
-//     while(true){
-//         await play();
-//         console.log("waiting for 30 seconds");
-//         await new Promise(resolve => setTimeout(resolve, 30000));
-//     }
-// }
+const main = async () => {
+    while(true){
+        await play();
+        console.log("waiting for 30 seconds");
+        await new Promise(resolve => setTimeout(resolve, 30000));
+    }
+}
 
-// main();
+main();
 
-play();
