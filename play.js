@@ -20,7 +20,7 @@ async function sendTelegramMessage(message) {
 }
 const play = async () => {
     var url = 'wss://api-clicker.pixelverse.xyz/socket.io/?EIO=4&transport=websocket';
-
+    let resultcount = 0;
     var client = new W3CWebSocket(url);
     let balletid;
     let messageInterval;
@@ -47,10 +47,10 @@ const play = async () => {
     client.onmessage = function (e) {
         if (typeof e.data === 'string') {
             let data = e.data.substring(2);
-            //console.log("Received: '" + e.data + "'");
+            console.log("Received: '" + e.data + "'");
             if (e.data[0] === '0') {
                 console.log('Connected');
-                client.send('40{"tg-id":5717002716,"secret":"066e3cb6c9e8bc7e404701ce954a9427e07e785486c0bad0a121215d35c711b9","initData":"query_id=AAHcicJUAgAAANyJwlSfO9St&user=%7B%22id%22%3A5717002716%2C%22first_name%22%3A%22Dileep%22%2C%22last_name%22%3A%22Kumar%22%2C%22username%22%3A%22dileep286%22%2C%22language_code%22%3A%22en%22%2C%22allows_write_to_pm%22%3Atrue%7D&auth_date=1719237441&hash=df3f4110902192e7a8f55df1c551549764f925b0fec868bd9718e4b20f521441"}');
+                client.send('40{"tg-id":1196575861,"secret":"40eaabfaef2b3d6187452521fa73de042b0df5aa3993076ad0d530ff58de6d42","initData":"query_id=AAF1TFJHAAAAAHVMUkco2nxI&user=%7B%22id%22%3A1196575861%2C%22first_name%22%3A%22PKD%22%2C%22last_name%22%3A%22%22%2C%22username%22%3A%22pranavkdileep%22%2C%22language_code%22%3A%22en%22%2C%22allows_write_to_pm%22%3Atrue%7D&auth_date=1719498380&hash=ef35949b044c5788855889535ab2ba7988532fb31348f41ce26594a8207b2cae"}');
             }
             else if (e.data.includes('START')) {
                 console.log('Game Started');
@@ -72,8 +72,10 @@ const play = async () => {
             }
             else if (e.data.includes('reward')) {
                 let result = JSON.parse(data);
-                sendTelegramMessage(`You have ${result[1].result} ${result[1].reward} coins`);
-                console.log(result);
+                if(resultcount++ === 0){
+                    console.log(result);
+                    sendTelegramMessage(result);
+                }
             }
         }
     }
