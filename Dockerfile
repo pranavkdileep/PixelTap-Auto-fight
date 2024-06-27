@@ -1,4 +1,5 @@
-FROM node:current-alpine3.19
+FROM node:lts-bullseye-slim
+
 
 
 WORKDIR /app
