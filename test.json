@@ -1,0 +1,23 @@
+[
+  "END",
+  {
+    "result": "LOSE",
+    "reward": 13000,
+    "statistics": [
+      {
+        "userId": "fcf6d24e-2265-4b4c-8177-82b2f46421e9",
+        "hitsCount": 20,
+        "totalDamage": 1240,
+        "superAttackDamage": 0,
+        "defendedSuperAttack": 0
+      },
+      {
+        "userId": "5806203",
+        "hitsCount": 118,
+        "totalDamage": 9796,
+        "superAttackDamage": 2480,
+        "defendedSuperAttack": 2480
+      }
+    ]
+  }
+]
