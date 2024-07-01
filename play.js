@@ -63,7 +63,8 @@ const play = async () => {
                 }
                 messageInterval = setInterval(() => {
                     client.send(`42["HIT",{"battleId":"${balletid}"}]`);
-                },50);
+                    //console.log('HIT');
+                },100);
             }
             else if (e.data.includes('SET_SUPER_HIT_ATTACK_ZONE')){
                 let random = Math.floor(Math.random() * 4);
